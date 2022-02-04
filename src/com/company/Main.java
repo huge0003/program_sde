@@ -15,12 +15,13 @@ public class Main {
 
         Calculator calculator = new Calculator();
 
-        Adapter adapter = new PiAdapter(reader);
-        while (true) {
+        P_Adapter pAdapter = new PiAdapter(reader);
+        F_Adapter fAdapter = new fibonacciAdapter(reader);
 
-            writer.write("Wil je gebruik maken van het rekenmachine [1] of wil je weten of een getal zich bevind in de eerste 7 cijfers van pi? [2]");
-
-            if(reader.readLine().equals(1)) {
+            String checkNumber = "Welk nummer wil je controleren?";
+            writer.write("Wil je gebruik maken van het rekenmachine [1], wil je weten of een getal zich bevind in de eerste 7 cijfers van pi? [2] of wil je weten of een getal zich bevind in de eerste 5 cijfers van de Fibonnacci-code [3]?");
+            String readLine = reader.readLine();
+            if (readLine.equals("1")) {
                 writer.write("Wil je optellen [+], aftrekken [-], vermenigvuldigen [*] of delen[/]?");
                 String mode = reader.readLine();
 
@@ -45,13 +46,24 @@ public class Main {
                 writer.write("Het antwoord is:");
                 int result = calculator.calculate(firstNum, secondNum);
                 writer.write(result + "");
-            } else writer.write("Welk nummer wil je controleren?");
+            } else if(readLine.equals("2")) {
 
-            if(adapter.readBoolean()){
-                writer.write("Dit getal bevindt zich in de eerste 7 cijfers van pi");
-            } else {
-                writer.write("Dit getal bevindt zich niet in de eerste cijfers van pi");
+                writer.write(checkNumber);
+
+
+                if (pAdapter.piBoolean()) {
+                    writer.write("Dit getal bevindt zich in de eerste 7 cijfers van pi");
+                } else {
+                    writer.write("Dit getal bevindt zich niet in de eerste 7 cijfers van pi");
+                }
+            } else if (readLine.equals("3")) {
+                writer.write(checkNumber);
+
+                if (fAdapter.fibonacciBoolean()) {
+                    writer.write("Dit getal bevindt zich in de eerste 5 cijfers van de fibonacci-code");
+                } else {
+                    writer.write("Dit getal bevindt zich niet in de eerste 5 cijfers van de fibonacci-code");
+                }
             }
-        }
     }
 }
